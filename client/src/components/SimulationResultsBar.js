@@ -1,4 +1,10 @@
 export const SimulationResultsBar = ({ simulationResults }) => {
+    const resultHeader = simulationResults.header
+        ? simulationResults.header
+        : "";
+    const resultData = simulationResults.simResult;
+    console.log(resultData);
+
     const JSX = (
         <div
             className="d-flex-col align-items-center 
@@ -6,14 +12,22 @@ export const SimulationResultsBar = ({ simulationResults }) => {
                 border border-black w-100 vh-max-100"
             overflow="scroll"
         >
-            <h2 className="display-6 border border-info fw-bold">
-                <small>Simulation Results</small>
-            </h2>
-
-            {simulationResults.map((result, index) => (
+            <div className="sticky-top">
+                <h2 className="display-6 border border-info fw-bold mb-0">
+                    <small>Simulation Results</small>
+                </h2>
+                {resultHeader ? (
+                    <div className="fw-bold text-danger card card-body bg-light">
+                        {resultHeader}
+                    </div>
+                ) : (
+                    ""
+                )}
+            </div>
+            {resultData.map((result, index) => (
                 <div
                     key={index}
-                    className="d-flex-col justify-content-center  mx-auto"
+                    className="d-flex-col justify-content-center mx-auto"
                 >
                     <h4 className="p-2">
                         {result.data.description

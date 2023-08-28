@@ -25,8 +25,9 @@ function updateSimulationById(req, res) {
 
 // functions for calculating simuulation results and organizing the render
 function getPredictions(req, res) {
-    const { alpha, d, sequence } = req.body;
-    const { tDivMAdjusted, nm } = predictParameters(alpha, d);
+    const { alpha, d, h, sequence } = req.body;
+    const { A, B, C, alphaRadians, tDivM, H, nm, s, tDivMAdjusted } =
+        predictParameters(alpha, d, h);
     const { n, m, t } = getCombinations(tDivMAdjusted, nm);
     const n_models = n.length;
 
@@ -42,7 +43,38 @@ function getPredictions(req, res) {
             },
         };
     }
-    res.json(simResult);
+    const header = `Simulation parameters: A = ${A};B = ${B}; C = ${C}; alphaRadians= ${alphaRadians}; 
+    t/m = ${tDivM}; H = ${H}; nm = ${nm}; s = ${s}; t/m (adjusted) = ${tDivMAdjusted};`;
+
+    res.json({ header, simResult });
+}
+
+function formatSequence(sequence, n, m, t) {
+    let sequenceRender = "";
+    for (let i = 0; i <= n; i++) {
+        let stripRender = "";
+        let backgroundColor = "bg-warning";
+        let fontColor = "text-dark";
+        let registerShift = " ".repeat(t * i);
+        if (i == n) {
+            backgroundColor = "bg-secondary";
+            fontColor = "text-tertiary";
+        }
+        for (let j = 0; j <= m - 1; j++) {
+            let lineBreak = "<br />";
+            if (j == m - 1) {
+                lineBreak = "";
+            }
+            stripRender.concat(
+                `<pre>${registerShift}${sequence}${lineBreak}</pre>`
+            );
+        }
+
+        sequenceRender.concat(
+            `<div className = ${backgroundColor}${fontColor}>${stripRender}<br /></div>`
+        );
+    }
+    return sequenceRender;
 }
 
 function getFactors(val) {
@@ -72,7 +104,7 @@ function getCombinations(tdivm, nm) {
     return { n, m, t };
 }
 
-function predictParameters(ALPHA, D) {
+function predictParameters(ALPHA, D, H) {
     //calculate n, m, t
     // declaring constant values
     const A = 3.3,
@@ -88,7 +120,7 @@ function predictParameters(ALPHA, D) {
     const tDivM = (B * Math.tan(alphaRadians)) / A;
 
     // calculating h using equation 2(a)
-    const H = (B * C * D) / (A * tDivM);
+    H = H ? H : (B * C * D) / (A * tDivM); //conditional check for H to use user-input or re-calculate
 
     // calculating nm and s using equation 2(b)
     const nm = Math.round((C * D * H) / (B * Math.sqrt((C * D) ** 2 + H ** 2)));
@@ -116,7 +148,7 @@ function predictParameters(ALPHA, D) {
     // assigning relevant variables
     // let investigationResult = parameters;
 
-    return { tDivMAdjusted, nm }; //parameters of interest
+    return { A, B, C, alphaRadians, tDivM, H, nm, s, tDivMAdjusted }; //parameters of interest
 }
 
 export {

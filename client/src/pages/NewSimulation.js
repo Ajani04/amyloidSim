@@ -5,8 +5,10 @@ import { useState } from "react";
 
 const NewSimulation = (props) => {
     const user = props.user;
-    const defaultResult = { id: 0, data: "Nothing to show yet ..." };
-    const [results, setResults] = useState([defaultResult]);
+    const defaultResult = {
+        simResult: [{ id: 0, data: "Nothing to show yet ..." }],
+    };
+    const [results, setResults] = useState(defaultResult);
     const JSX = (
         <div className="d-flex-col container-fluid">
             <Navbar username={user} />
