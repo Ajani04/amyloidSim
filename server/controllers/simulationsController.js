@@ -26,7 +26,7 @@ function updateSimulationById(req, res) {
 // functions for calculating simuulation results and organizing the render
 function getPredictions(req, res) {
     const { alpha, d, h, sequence } = req.body;
-    const { A, B, C, alphaRadians, tDivM, H, nm, s, tDivMAdjusted } =
+    const { A, B, C, alphaRadians, tDivM, H, nm, s, sAdjusted, tDivMAdjusted } =
         predictParameters(alpha, d, h);
     const { n, m, t } = getCombinations(tDivMAdjusted, nm);
     const n_models = n.length;
@@ -39,12 +39,12 @@ function getPredictions(req, res) {
                 description: `Model ${i + 1}: n = ${n[i]}; m = ${m[i]}; t = ${
                     t[i]
                 }`,
-                sequence: `${sequence}`,
+                sequence: `${formatSequence(sequence, n[i], m[i], t[i])}`,
             },
         };
     }
-    const header = `Simulation parameters: A = ${A};B = ${B}; C = ${C}; alphaRadians= ${alphaRadians}; 
-    t/m = ${tDivM}; H = ${H}; nm = ${nm}; s = ${s}; t/m (adjusted) = ${tDivMAdjusted};`;
+    const header = `Simulation parameters: a = ${A};b = ${B}; c = ${C};α(radians)= ${alphaRadians}; 
+    t/m = ${tDivM}; h = ${H}; nm = ${nm}; s = ${s}; s(adjusted) = ${sAdjusted}; t/m (adjusted) = ${tDivMAdjusted};`;
 
     res.json({ header, simResult });
 }
@@ -53,26 +53,19 @@ function formatSequence(sequence, n, m, t) {
     let sequenceRender = "";
     for (let i = 0; i <= n; i++) {
         let stripRender = "";
-        let backgroundColor = "bg-warning";
-        let fontColor = "text-dark";
-        let registerShift = " ".repeat(t * i);
+        let className = "normal-sequence";
+        let registerShift = t * i;
+        let currChain = i + 1;
         if (i == n) {
-            backgroundColor = "bg-secondary";
-            fontColor = "text-tertiary";
+            className = "repeat-sequence";
+            currChain = 1;
         }
         for (let j = 0; j <= m - 1; j++) {
-            let lineBreak = "<br />";
-            if (j == m - 1) {
-                lineBreak = "";
-            }
-            stripRender.concat(
-                `<pre>${registerShift}${sequence}${lineBreak}</pre>`
-            );
+            stripRender += `<pre style=padding-left:${
+                registerShift * 25.5
+            }px;>${sequence}</pre>`;
         }
-
-        sequenceRender.concat(
-            `<div className = ${backgroundColor}${fontColor}>${stripRender}<br /></div>`
-        );
+        sequenceRender += `<div class ="${className}">${stripRender}</div>`;
     }
     return sequenceRender;
 }
@@ -97,10 +90,18 @@ function getFactors(val) {
     return factors;
 }
 
+const makeEven = (value) => {
+    // this function returns the nearest even value for the input value.
+    let intVal = Math.round(value);
+    // check if value is divisible by 2
+    intVal = intVal % 2 ? intVal + 1 : intVal;
+    return intVal;
+};
+
 function getCombinations(tdivm, nm) {
-    const n = getFactors(nm); // all possible factors of nm for combination
+    const n = getFactors(Math.round(nm)); // all possible factors of nm for combination
     const m = [...n].reverse(); // reverses the shallow copy of n to match the combinations
-    const t = m.map((x) => tdivm * x);
+    const t = m.map((x) => makeEven(tdivm * x));
     return { n, m, t };
 }
 
@@ -120,12 +121,13 @@ function predictParameters(ALPHA, D, H) {
     const tDivM = (B * Math.tan(alphaRadians)) / A;
 
     // calculating h using equation 2(a)
-    H = H ? H : (B * C * D) / (A * tDivM); //conditional check for H to use user-input or re-calculate
+    H = H ? +H : (B * C * D) / (A * tDivM); //conditional check for H to use user-input or re-calculate
 
     // calculating nm and s using equation 2(b)
     const nm = Math.round((C * D * H) / (B * Math.sqrt((C * D) ** 2 + H ** 2)));
 
     const s = Math.round(nm * tDivM); // shear number s = nt
+    const sAdjusted = makeEven(s);
 
     //calculating the adjusted values of t/m
     const tDivMAdjusted = s / nm;
@@ -148,7 +150,26 @@ function predictParameters(ALPHA, D, H) {
     // assigning relevant variables
     // let investigationResult = parameters;
 
-    return { A, B, C, alphaRadians, tDivM, H, nm, s, tDivMAdjusted }; //parameters of interest
+    let parameters = {
+        A,
+        B,
+        C,
+        alphaRadians,
+        tDivM,
+        H,
+        nm,
+        s,
+        sAdjusted,
+        tDivMAdjusted,
+    }; //parameters of interest
+
+    for (let parameter in parameters) {
+        if (parameters.hasOwnProperty(parameter)) {
+            parameters[parameter] = parameters[parameter].toFixed(2); // truncate to 2 decimal places
+        }
+    }
+
+    return parameters;
 }
 
 export {

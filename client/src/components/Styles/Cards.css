@@ -36,3 +36,20 @@ textarea:focus {
 ::placeholder {
     text-align: center;
 }
+
+/* Styling the sequence render */
+pre {
+    margin-bottom: -5px;
+    letter-spacing: 5px;
+}
+
+.normal-sequence {
+    display: flex;
+    flex-flow: column wrap;
+    background-color: lightgoldenrodyellow;
+}
+
+#resultviewer {
+    max-height: 50%;
+    overflow: auto;
+}
