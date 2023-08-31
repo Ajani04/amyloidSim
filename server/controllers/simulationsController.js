@@ -61,9 +61,9 @@ function formatSequence(sequence, n, m, t) {
             currChain = 1;
         }
         for (let j = 0; j <= m - 1; j++) {
-            stripRender += `<pre style=padding-left:${
-                registerShift * 25.5
-            }px;>${sequence}</pre>`;
+            stripRender += `<div class=chain style=margin-left:${
+                registerShift * 12.7
+            }px;><pre >${sequence}</pre></div>`;
         }
         sequenceRender += `<div class ="${className}">${stripRender}</div>`;
     }

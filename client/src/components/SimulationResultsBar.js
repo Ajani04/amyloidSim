@@ -10,6 +10,7 @@ export const SimulationResultsBar = ({ simulationResults }) => {
             className="d-flex-col align-items-center 
                 justify-content-center text-center 
                 border border-black w-100"
+            id="viewer"
         >
             <div className="sticky-top">
                 <h2 className="display-6 border border-info fw-bold mb-0">
@@ -34,17 +35,15 @@ export const SimulationResultsBar = ({ simulationResults }) => {
                                 ? result.data.description
                                 : result.data}
                         </h4>
-                        <p>
-                            {result.data.sequence ? (
-                                <div
-                                    dangerouslySetInnerHTML={{
-                                        __html: result.data.sequence,
-                                    }}
-                                ></div>
-                            ) : (
-                                ""
-                            )}
-                        </p>
+                        {result.data.sequence ? (
+                            <div
+                                dangerouslySetInnerHTML={{
+                                    __html: result.data.sequence,
+                                }}
+                            ></div>
+                        ) : (
+                            ""
+                        )}
                     </div>
                 ))}
             </div>

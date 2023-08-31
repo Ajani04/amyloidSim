@@ -7,7 +7,7 @@ const SimulationHome = (props) => {
     let user = props.user;
 
     const JSX = (
-        <div id="resultcontainer">
+        <div>
             <Navbar username={user} />
             <div className="d-flex-col align-items-center justify-content-center my-4 py-4 text-center">
                 <h1 className="display-3"> WELCOME BACK, {user}</h1>

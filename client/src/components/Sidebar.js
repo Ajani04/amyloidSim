@@ -67,6 +67,7 @@ export default function Sidebar({ resultHandler }) {
                         <label htmlFor="ALPHA">&alpha;</label>
                         <input
                             required
+                            max="90"
                             className="border rounded-0 border-dark border-1 py-0 col-5"
                             name="ALPHA"
                             onChange={(e) => setAlpha(e.target.value)}
