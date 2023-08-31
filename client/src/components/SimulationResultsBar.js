@@ -9,7 +9,7 @@ export const SimulationResultsBar = ({ simulationResults }) => {
         <div
             className="d-flex-col align-items-center 
                 justify-content-center text-center 
-                border border-black w-100 vh-max-100"
+                border border-black w-100"
         >
             <div className="sticky-top">
                 <h2 className="display-6 border border-info fw-bold mb-0">

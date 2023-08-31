@@ -67,7 +67,7 @@ export default function Sidebar({ resultHandler }) {
                         <label htmlFor="ALPHA">&alpha;</label>
                         <input
                             required
-                            className="border rounded-0 border-dark border-1"
+                            className="border rounded-0 border-dark border-1 py-0 col-5"
                             name="ALPHA"
                             onChange={(e) => setAlpha(e.target.value)}
                             value={alpha}
@@ -80,7 +80,7 @@ export default function Sidebar({ resultHandler }) {
 
                         <input
                             required
-                            className="border rounded-0 border-dark border-1"
+                            className="border rounded-0 border-dark border-1 py-0 col-5"
                             name="D"
                             onChange={(e) => setD(e.target.value)}
                             value={d}
@@ -92,7 +92,7 @@ export default function Sidebar({ resultHandler }) {
                         <label htmlFor="H">h</label>
 
                         <input
-                            className="border rounded-0 border-dark border-1"
+                            className="border rounded-0 border-dark border-1 py-0 col-5"
                             name="H"
                             onChange={(e) => setH(e.target.value)}
                             value={h}
