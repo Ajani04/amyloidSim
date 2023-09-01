@@ -49,21 +49,58 @@ function getPredictions(req, res) {
     res.json({ header, simResult });
 }
 
+function randomLightBackgroundColorGenerator() {
+    // this function generates a random light shade for setting as RGB background color
+    // const colorRange = 255 - 229;
+    const colorRange = 50;
+    const light_color =
+        "rgb(" +
+        (Math.floor(colorRange * Math.random()) + 200) +
+        "," +
+        (Math.floor(colorRange * Math.random()) + 200) +
+        "," +
+        (Math.floor(colorRange * Math.random()) + 200) +
+        ")";
+    return `style = "background-color: ${light_color}; border-radius: 50%;"`;
+}
+
+function adjustSequence(sequence) {
+    const sequenceArr = sequence.split("");
+    const bgColor = randomLightBackgroundColorGenerator();
+    let properSequence = "";
+
+    sequenceArr.map(
+        (char) =>
+            (properSequence += `<span ${bgColor} class="fw-bold atom">${char}</span>`)
+    );
+    return properSequence;
+}
+
 function formatSequence(sequence, n, m, t) {
     let sequenceRender = "";
     for (let i = 0; i <= n; i++) {
+        let newSequence = adjustSequence(sequence);
+        // let firstSequence = "";
         let stripRender = "";
         let className = "normal-sequence";
         let registerShift = t * i;
         let currChain = i + 1;
+
+        // necessary conditionals for managing repeat sequence
+        // if (i == 1) {
+        //     firstSequence += newSequence;
+        // }
+
         if (i == n) {
             className = "repeat-sequence";
+            // newSequence = firstSequence;
             currChain = 1;
         }
+
         for (let j = 0; j <= m - 1; j++) {
             stripRender += `<div class=chain style=margin-left:${
-                registerShift * 12.7
-            }px;><pre >${sequence}</pre></div>`;
+                registerShift * 20
+            }px;><pre>${newSequence}</pre></div>`;
         }
         sequenceRender += `<div class ="${className}">${stripRender}</div>`;
     }
