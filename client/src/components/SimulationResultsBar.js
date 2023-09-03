@@ -17,7 +17,7 @@ export const SimulationResultsBar = ({ simulationResults }) => {
                     <small>Simulation Results</small>
                 </h2>
                 {resultHeader ? (
-                    <div className="fw-bold text-danger card card-body bg-light">
+                    <div className="d-flex-wrap fw-bold text-danger card card-body bg-light">
                         {resultHeader}
                     </div>
                 ) : (

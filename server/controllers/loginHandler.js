@@ -18,6 +18,6 @@ export default async function handleLogin(req, res) {
 
 export function createToken(_sessionId) {
     return jwt.sign({ _id: _sessionId }, process.env.SECRET, {
-        expiresIn: "3d",
+        expiresIn: "1h",
     });
 }

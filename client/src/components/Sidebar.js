@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../components/Cards";
 
 export default function Sidebar({ resultHandler }) {
     const [alpha, setAlpha] = useState("");
@@ -67,25 +68,26 @@ export default function Sidebar({ resultHandler }) {
                         <label htmlFor="ALPHA">&alpha;</label>
                         <input
                             required
+                            min="0"
                             max="90"
-                            className="border rounded-0 border-dark border-1 py-0 col-5"
+                            className="border rounded-0 border-dark border-1 py-0 col-6"
                             name="ALPHA"
                             onChange={(e) => setAlpha(e.target.value)}
                             value={alpha}
-                            type="text"
+                            type="number"
                             inputMode="numeric"
                         />
                     </span>
                     <span className="fw-bold">
                         <label htmlFor="D">d</label>
-
                         <input
-                            required
-                            className="border rounded-0 border-dark border-1 py-0 col-5"
+                            min="0"
+                            max="90"
+                            className="border rounded-0 border-dark border-1 py-0 col-6"
                             name="D"
                             onChange={(e) => setD(e.target.value)}
                             value={d}
-                            type="text"
+                            type="number"
                             inputMode="numeric"
                         />
                     </span>
@@ -93,11 +95,13 @@ export default function Sidebar({ resultHandler }) {
                         <label htmlFor="H">h</label>
 
                         <input
-                            className="border rounded-0 border-dark border-1 py-0 col-5"
+                            min="0"
+                            max="90"
+                            className="border rounded-0 border-dark border-1 py-0 col-6"
                             name="H"
                             onChange={(e) => setH(e.target.value)}
                             value={h}
-                            type="text"
+                            type="number"
                             inputMode="numeric"
                         />
                     </span>

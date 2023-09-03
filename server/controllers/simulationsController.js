@@ -26,8 +26,19 @@ function updateSimulationById(req, res) {
 // functions for calculating simuulation results and organizing the render
 function getPredictions(req, res) {
     const { alpha, d, h, sequence } = req.body;
-    const { A, B, C, alphaRadians, tDivM, H, nm, s, sAdjusted, tDivMAdjusted } =
-        predictParameters(alpha, d, h);
+    const {
+        A,
+        B,
+        C,
+        alphaRadians,
+        D,
+        tDivM,
+        H,
+        nm,
+        s,
+        sAdjusted,
+        tDivMAdjusted,
+    } = predictParameters(+alpha, +d, +h);
     const { n, m, t } = getCombinations(tDivMAdjusted, nm);
     const n_models = n.length;
 
@@ -43,7 +54,7 @@ function getPredictions(req, res) {
             },
         };
     }
-    const header = `Simulation parameters: a = ${A};b = ${B}; c = ${C};α(radians)= ${alphaRadians}; 
+    const header = `Simulation parameters: a = ${A}; b = ${B}; c = ${C}; α(radians)= ${alphaRadians}; d = ${D};
     t/m = ${tDivM}; h = ${H}; nm = ${nm}; s = ${s}; s(adjusted) = ${sAdjusted}; t/m (adjusted) = ${tDivMAdjusted};`;
 
     res.json({ header, simResult });
@@ -77,29 +88,33 @@ function adjustSequence(sequence) {
 }
 
 function formatSequence(sequence, n, m, t) {
+    // conditional checks for invalids
+    if (t >= sequence.length) {
+        return "<div class = 'h5 fw-bold p-2 border border-warning rounded-3 me-3'><i class='fa fa-warning text-warning mx-3'></i>Invalid Model: register shift MUST be less than the sequence length!</div>";
+    }
+
+    if (!t | !n | !m) {
+        return "<div class = 'h5 fw-bold p-2 border border-warning rounded-3 me-3'><i class='fa fa-warning text-warning mx-3'></i>Invalid Model: one of more of the input parameters is unbounded/inaccurate!</div>";
+    }
+
+    //otherwise
+
     let sequenceRender = "";
     for (let i = 0; i <= n; i++) {
         let newSequence = adjustSequence(sequence);
-        // let firstSequence = "";
         let stripRender = "";
         let className = "normal-sequence";
         let registerShift = t * i;
         let currChain = i + 1;
 
-        // necessary conditionals for managing repeat sequence
-        // if (i == 1) {
-        //     firstSequence += newSequence;
-        // }
-
         if (i == n) {
             className = "repeat-sequence";
-            // newSequence = firstSequence;
             currChain = 1;
         }
 
         for (let j = 0; j <= m - 1; j++) {
             stripRender += `<div class=chain style=margin-left:${
-                registerShift * 20
+                registerShift * 19.7
             }px;><pre>${newSequence}</pre></div>`;
         }
         sequenceRender += `<div class ="${className}">${stripRender}</div>`;
@@ -160,6 +175,9 @@ function predictParameters(ALPHA, D, H) {
     // calculating h using equation 2(a)
     H = H ? +H : (B * C * D) / (A * tDivM); //conditional check for H to use user-input or re-calculate
 
+    // calculating d if optional from user via equation
+    D = D ? +D : (tDivM * A * H) / (B * C); //conditional check for H to use user-input or re-calculate
+
     // calculating nm and s using equation 2(b)
     const nm = Math.round((C * D * H) / (B * Math.sqrt((C * D) ** 2 + H ** 2)));
 
@@ -192,6 +210,7 @@ function predictParameters(ALPHA, D, H) {
         B,
         C,
         alphaRadians,
+        D,
         tDivM,
         H,
         nm,
