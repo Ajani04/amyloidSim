@@ -70,6 +70,7 @@ export default function Sidebar({ resultHandler }) {
                             required
                             min="0"
                             max="90"
+                            step="0.01"
                             className="border rounded-0 border-dark border-1 py-0 col-6"
                             name="ALPHA"
                             onChange={(e) => setAlpha(e.target.value)}
