@@ -22,7 +22,7 @@ const Navbar = (props) => {
                     <i className="align-self-center fa fa-user-circle border border-3 mx-2"></i>
                 </span>
                 <button
-                    className="text-end btn fw-bold btn-warning ms-3"
+                    className="text-end btn fw-bold btn-warning ms-3 me-5"
                     onClick={handleLogout}
                 >
                     Log out

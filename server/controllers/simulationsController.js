@@ -90,15 +90,15 @@ function adjustSequence(sequence) {
 function formatSequence(sequence, n, m, t) {
     // conditional checks for invalids
     if (t >= sequence.length) {
-        return "<div class = 'h5 fw-bold p-2 border border-warning rounded-3 me-3'><i class='fa fa-warning text-warning mx-3'></i>Invalid Model: register shift MUST be less than the sequence length!</div>";
+        return "<div class = 'h5 p-2 border border-warning rounded-3 me-3'><i class='fa fa-warning text-warning mx-3'></i>Invalid Model: register shift MUST be less than the sequence length!</div>";
     }
 
-    if (!t | !n | !m) {
+    // catching unbounded values or NaNs
+    if (isNaN(t) | isNaN(n) | isNaN(m)) {
         return "<div class = 'h5 fw-bold p-2 border border-warning rounded-3 me-3'><i class='fa fa-warning text-warning mx-3'></i>Invalid Model: one of more of the input parameters is unbounded/inaccurate!</div>";
     }
 
     //otherwise
-
     let sequenceRender = "";
     for (let i = 0; i <= n; i++) {
         let newSequence = adjustSequence(sequence);
