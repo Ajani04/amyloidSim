@@ -15,7 +15,7 @@ export default function About() {
                         <h2 className="text-center text-secondary display-6 fw-bold">
                             ABOUT
                         </h2>
-                        <p className="container w-75 lead mt-lg-3 text-left">
+                        <p className="container w-75 lead mt-lg-3 text-left lh-lg">
                             The amyloidSim project offers an automated approach
                             to amyloid fibrils investigation. This is
                             significant for rapid prototyping of various models
@@ -37,7 +37,6 @@ export default function About() {
                             <a href="https://www.github.com/Ajani04">link</a>.
                         </p>
                     </div>
-                    <p className=""></p>
                 </div>
             </main>
             <Footer />
