@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function Header() {
     const JSX = (
-        <div className="container-fluid bg-body-white">
+        <div className="container-fluid bg-white sticky-top">
             <header className="p-3 container vh-80">
                 <nav className="navbar navbar-expand-md container-fluid-md">
                     <Link

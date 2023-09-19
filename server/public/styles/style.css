@@ -1,11 +1,10 @@
 :root {
-    --main-color: #D8D6E6;
-    --white-accent: #FBF9F9;
-    --pink-accent: #9F7A75;
-    --army-green-accent: #485B4A;
+    --main-color: #d8d6e6;
+    --white-accent: #fbf9f9;
+    --pink-accent: #9f7a75;
+    --army-green-accent: #485b4a;
     --dark-accent: #323933;
-};
-
+}
 
 .navbar .navbar-nav .nav-link {
     color: var(--dark-accent);
@@ -13,26 +12,26 @@
 }
 
 .navbar .navbar-nav .nav-link:hover {
-color: var(--dark-accent);
+    color: var(--dark-accent);
 }
 
 .navbar .navbar-nav .nav-item {
-position: relative;
+    position: relative;
 }
 
 .navbar .navbar-nav .nav-item::after {
-position: absolute;
-bottom: 0;
-left: 0;
-right: 0;
-margin: auto;
-background-color: var(--dark-accent);
-width: 0%;
-content: "";
-height: 4px;
-transition: all 0.5s;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background-color: var(--dark-accent);
+    width: 0%;
+    content: "";
+    height: 4px;
+    transition: all 0.5s;
 }
-  
+
 .navbar .navbar-nav .nav-item:hover::after {
-width: 100%;
+    width: 100%;
 }

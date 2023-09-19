@@ -10,7 +10,7 @@ const NewSimulation = (props) => {
     };
     const [results, setResults] = useState(defaultResult);
     const JSX = (
-        <div className="d-flex-col container-fluid">
+        <div className="d-flex-col container-fluid vh-100 w-100">
             <Navbar username={user} />
             <div className="mb-2 d-flex align-items-stretch">
                 <Sidebar resultHandler={setResults} />
