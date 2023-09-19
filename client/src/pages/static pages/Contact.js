@@ -9,7 +9,7 @@ export default function Contact() {
     const JSX = (
         <>
             <Header />
-            <main className="container p-3 text-center">
+            <main className="container text-center">
                 <div className="p-4 v-stack">
                     <div className="text-start d-flex-col">
                         <h2 className="text-center text-secondary display-6 fw-bold">
@@ -38,7 +38,7 @@ export default function Contact() {
                                         </span>{" "}
                                     </div>
                                     <div className="d-flex mb-2">
-                                        <i className="fa fa-institution"></i>
+                                        <i className="fa fa-envelope"></i>
                                         &nbsp;&nbsp;&nbsp;
                                         <span>Email: sjh@cmp.uea.ac.uk</span>
                                     </div>
@@ -59,8 +59,8 @@ export default function Contact() {
                                             NR4 7TJ, United Kingdom.
                                         </span>{" "}
                                     </div>
-                                    <div className="d-flex mb-2">
-                                        <i className="fa fa-institution"></i>
+                                    <div className="d-flex">
+                                        <i className="fa fa-envelope"></i>
                                         &nbsp;&nbsp;&nbsp;
                                         <span>
                                             Email: o.ajani@uea.ac.uk;
