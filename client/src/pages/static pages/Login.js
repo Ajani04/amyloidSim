@@ -23,7 +23,7 @@ export default function Login() {
                     amyloidSim
                 </Link>
             </div>
-            <div className="col-5 mt-4 py-3 display-4 text-end mx-5">
+            <div className="col-6 mt-4 py-3 display-5 text-center mx-5">
                 Login to Your Account!
             </div>
             <div className="container-fluid mb-5">
