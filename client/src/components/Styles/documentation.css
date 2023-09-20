@@ -1,0 +1,35 @@
+#navigation-links {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 35%;
+    height: 100%;
+    margin: 0px auto 20px;
+}
+
+.navigation-link {
+    text-decoration: none;
+    color: gray;
+    width: 100%;
+    padding: 10px;
+    padding-left: 20px;
+    transition: text-indent 0.3s ease-in;
+}
+
+.navigation-link:hover {
+    /* background-color: gray; */
+    /* color: white; */
+    font-weight: 700;
+    text-indent: 5px;
+}
+
+/* #documentation-body > #content {
+    height: 100vh;
+    overflow-y: scroll;
+} */
+
+@media (max-width: 1200px) {
+    #navigation-links {
+        display: none;
+    }
+}
